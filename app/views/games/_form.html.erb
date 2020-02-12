@@ -1,0 +1,26 @@
+<%= form_with(model: game, local: true) do |form| %>
+  <% if game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+        <% game.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= label_tag(:played_on, "Played On:") %>
+  <%= date_field(:game, :played_on) %>
+
+  <%= label_tag(:time_slot, "Time Slot:") %>
+  <%= select_tag(:time_slot, options_for_select(time_slots))%>
+
+  <%= label_tag(:duration, "Duration:") %>
+  <%= select_tag(:duration, options_for_select(durations))%>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
