@@ -1,4 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_player_path(@player) %> |
-<%= link_to 'Back', players_path %>
+<h1>Player details</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <td><%= fullname(@player.firstname, @player.lastname) %></td>
+  </tr>
+  <tr>
+    <th>Mobile number</th>
+    <td><%= @player.mobile_number %></td>
+  </tr>
+  <tr>
+    <th>E-mail ID</th>
+    <td><%= @player.email_id %></td>
+  </tr>
+</table>
+
+<center>
+  <%= link_to 'Edit', edit_player_path(@player) %>
+  <%= link_to 'Back', players_path %>
+</center>

@@ -11,7 +11,19 @@
     </div>
   <% end %>
 
+  <%= form.label(:firstname, 'Firstname') %>
+  <%= form.text_field :firstname %>
+
+  <%= form.label(:lastname, 'Lastname') %>
+  <%= form.text_field :lastname %>
+
+  <%= form.label(:mobile_number, 'Mobile number') %>
+  <%= form.text_field :mobile_number %>
+
+  <%= form.label(:email_id, 'E-mail ID') %>
+  <%= form.text_field :email_id %>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit("Create player", class: "button") %>
   </div>
 <% end %>
