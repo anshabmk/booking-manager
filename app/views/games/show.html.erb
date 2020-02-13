@@ -1,4 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<h1>Game details</h1>
+
+<table>
+  <tr>
+    <th>Played on</th>
+    <td><%= parse_date(@game.played_on) %></td>
+  </tr>
+  <tr>
+    <th>Time slot</th>
+    <td><%= parse_time_slot(@game.time_slot) %></td>
+  </tr>
+  <tr>
+    <th>Duration</th>
+    <td><%= parse_duration(@game.duration) %></td>
+  </tr>
+</table>
+
+<center>
+  <%= link_to 'Edit', edit_game_path(@game) %>
+  <%= link_to 'Back', games_path %>
+</center>
