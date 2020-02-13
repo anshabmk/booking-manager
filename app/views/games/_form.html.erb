@@ -11,16 +11,16 @@
     </div>
   <% end %>
 
-  <%= label_tag(:played_on, "Played On:") %>
-  <%= date_field(:game, :played_on) %>
+  <%= form.label(:played_on, 'Played on') %>
+  <%= form.date_field :played_on %>
 
-  <%= label_tag(:time_slot, "Time Slot:") %>
-  <%= select_tag(:time_slot, options_for_select(time_slots))%>
+  <%= form.label(:time_slot, 'Time slot') %>
+  <%= form.select(:time_slot, time_slots) %>
 
-  <%= label_tag(:duration, "Duration:") %>
-  <%= select_tag(:duration, options_for_select(durations))%>
+  <%= form.label(:duration, 'Duration') %>
+  <%= form.select(:duration, durations) %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit("Submit", class: "button") %>
   </div>
 <% end %>
