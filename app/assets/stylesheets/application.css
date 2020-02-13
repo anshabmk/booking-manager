@@ -47,3 +47,16 @@ h1, h2, h3, h4, h5, h6, h7 {
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+input {
+  width: 100%;
+}
+
+select {
+  width: 100%;
+}
+
+.form-container {
+  margin: 0 auto;
+  width: 50%;
+}
