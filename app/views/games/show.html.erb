@@ -17,6 +17,25 @@
   </tr>
 </table>
 
+<table>
+  <thead>
+    <tr>
+      <th>
+        Players
+      </th>
+  </thead>
+
+  <tbody>
+    <% @game.players.each do |player| %>
+      <tr>
+        <td>
+          <%= player.firstname %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <center>
   <%= link_to 'Edit', edit_game_path(@game) %>
   <%= link_to 'Back', games_path %>
