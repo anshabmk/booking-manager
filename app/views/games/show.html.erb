@@ -17,19 +17,38 @@
   </tr>
 </table>
 
+<h2>Players</h2>
 <table>
   <thead>
     <tr>
       <th>
-        Players
+        Sl. No.
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        Mobile number
+      </th>
+      <th>
+        E-mail ID
       </th>
   </thead>
 
   <tbody>
-    <% @game.players.each do |player| %>
+    <% @game.players.each_with_index do |player, i| %>
       <tr>
         <td>
+          <%= i + 1 %>
+        </td>
+        <td>
           <%= fullname(player.firstname, player.lastname) %>
+        </td>
+        <td>
+          <%= player.mobile_number %>
+        </td>
+        <td>
+          <%= player.email_id %>
         </td>
       </tr>
     <% end %>
@@ -37,6 +56,6 @@
 </table>
 
 <center>
-  <%= link_to 'Edit', edit_game_path(@game) %>
+  <%= link_to 'Edit', edit_game_path(@game) %> | 
   <%= link_to 'Back', games_path %>
 </center>
