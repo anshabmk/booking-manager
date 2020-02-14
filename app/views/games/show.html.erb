@@ -29,7 +29,7 @@
     <% @game.players.each do |player| %>
       <tr>
         <td>
-          <%= player.firstname %>
+          <%= fullname(player.firstname, player.lastname) %>
         </td>
       </tr>
     <% end %>
