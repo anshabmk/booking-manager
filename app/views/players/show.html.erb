@@ -17,7 +17,35 @@
   </tr>
 </table>
 
+<h2>Recent matches</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        Sl. No.
+      </th>
+      <th>
+        Played on
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @player.games.each_with_index do |game, i| %>
+      <tr>
+        <td>
+          <%= i + 1 %>
+        </td>
+        <td>
+          <%= game.played_on %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <center>
-  <%= link_to 'Edit', edit_player_path(@player) %>
+  <%= link_to 'Edit', edit_player_path(@player) %> |
   <%= link_to 'Back', players_path %>
 </center>
