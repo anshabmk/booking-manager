@@ -20,6 +20,15 @@
   <%= form.label(:duration, 'Duration') %>
   <%= form.select(:duration, durations) %>
 
+  <h3>Players</h3>
+  <%= hidden_field_tag "game[player_ids][]", nil %>
+  <% Player.all.each do |player| %>
+    <div class="inline-field">
+      <%= check_box_tag "game[player_ids][]", player.id, game.player_ids.include?(player.id), id: dom_id(player) %>
+      <%= label_tag dom_id(player), player.firstname %><br>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= form.submit("Submit", class: "button") %>
   </div>
