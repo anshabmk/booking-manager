@@ -32,13 +32,13 @@
   </thead>
 
   <tbody>
-    <% @player.games.each_with_index do |game, i| %>
+    <% @player.games.order(played_on: :desc).each_with_index do |game, i| %>
       <tr>
         <td>
           <%= i + 1 %>
         </td>
         <td>
-          <%= game.played_on %>
+          <%= parse_date(game.played_on) %>
         </td>
       </tr>
     <% end %>
