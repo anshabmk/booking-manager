@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Sl. No.</th>
       <th>Name</th>
       <th>Mobile number</th>
       <th>E-mail ID</th>
@@ -13,8 +14,9 @@
   </thead>
 
   <tbody>
-    <% @players.each do |player| %>
+    <% @players.each_with_index do |player, i| %>
       <tr>
+        <td><%= i + 1 %></td>
         <td><%= fullname(player.firstname, player.lastname) %></td>
         <td><%= player.mobile_number %></td>
         <td><%= player.email_id %></td>

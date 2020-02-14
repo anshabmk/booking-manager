@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Sl. No.</th>
       <th>Played on</th>
       <th>Time slot</th>
       <th>Duration</th>
@@ -13,8 +14,9 @@
   </thead>
 
   <tbody>
-    <% @games.each do |game| %>
+    <% @games.each_with_index do |game, i| %>
       <tr>
+        <td><%= i + 1 %></td>
         <td><%= parse_date(game.played_on) %></td>
         <td><%= parse_time_slot(game.time_slot) %></td>
         <td><%= parse_duration(game.duration) %></td>
