@@ -24,6 +24,7 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
+    byebug
     @game = Game.new(game_params)
 
     respond_to do |format|
@@ -62,13 +63,19 @@ class GamesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_game
-      @game = Game.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def game_params
-      params.fetch(:game, {}).permit(:played_on, :time_slot, :duration)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_game
+    @game = Game.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def game_params
+    params.fetch(:game, {}).permit(
+      :played_on,
+      :time_slot,
+      :duration,
+      player_ids: []
+    )
+  end
 end
