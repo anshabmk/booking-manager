@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'bills/index'
   root 'games#index'
 
   resources :players
