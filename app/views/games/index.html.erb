@@ -2,32 +2,32 @@
 
 <h1>Games</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Sl. No.</th>
-      <th>Played on</th>
-      <th>Time slot</th>
-      <th>Duration</th>
-      <th>No. of players</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @games.each_with_index do |game, i| %>
+<div class="table-responsive">
+  <table class="table table-sm table-hover text-align-center">
+    <thead class="thead-dark">
       <tr>
-        <td><%= i + 1 %></td>
-        <td><%= parse_date(game.played_on) %></td>
-        <td><%= parse_time_slot(game.time_slot) %></td>
-        <td><%= parse_duration(game.duration) %></td>
-        <td><%= game.player_ids.count %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Sl. No.</th>
+        <th>Played on</th>
+        <th>Time slot</th>
+        <th>Duration</th>
+        <th>No. of players</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @games.each_with_index do |game, i| %>
+        <tr onclick="document.location = '<%= '/games/' + game.id.to_s %>'";">
+          <td><%= i + 1 %></td>
+          <td><%= parse_date(game.played_on) %></td>
+          <td><%= parse_time_slot(game.time_slot) %></td>
+          <td><%= parse_duration(game.duration) %></td>
+          <td><%= game.player_ids.count %></td>
+          <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 

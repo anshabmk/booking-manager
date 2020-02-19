@@ -2,32 +2,34 @@
 
 <h1>Players</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Sl. No.</th>
-      <th>Name</th>
-      <th>Mobile number</th>
-      <th>E-mail ID</th>
-      <th>No. of games</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @players.each_with_index do |player, i| %>
+<div class="table-responsive">
+  <table class="table table-sm table-hover text-align-center">
+    <thead class="thead-dark">
       <tr>
-        <td><%= i + 1 %></td>
-        <td><%= fullname(player.firstname, player.lastname) %></td>
-        <td><%= player.mobile_number %></td>
-        <td><%= player.email_id %></td>
-        <td><%= player.game_ids.count %></td>
-        <td><%= link_to 'Show', player %></td>
-        <td><%= link_to 'Edit', edit_player_path(player) %></td>
-        <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Sl. No.</th>
+        <th>Name</th>
+        <th>Mobile number</th>
+        <th>E-mail ID</th>
+        <th>No. of games</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @players.each_with_index do |player, i| %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= fullname(player.firstname, player.lastname) %></td>
+          <td><%= player.mobile_number %></td>
+          <td><%= player.email_id %></td>
+          <td><%= player.game_ids.count %></td>
+          <td><%= link_to 'Show', player %></td>
+          <td><%= link_to 'Edit', edit_player_path(player) %></td>
+          <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
