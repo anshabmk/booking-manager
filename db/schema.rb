@@ -16,13 +16,13 @@ ActiveRecord::Schema.define(version: 2020_02_19_134125) do
   enable_extension "plpgsql"
 
   create_table "bill_amounts", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "bills_id"
+    t.bigint "player_id"
+    t.bigint "bill_id"
     t.float "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["bills_id"], name: "index_bill_amounts_on_bills_id"
-    t.index ["users_id"], name: "index_bill_amounts_on_users_id"
+    t.index ["bill_id"], name: "index_bill_amounts_on_bill_id"
+    t.index ["player_id"], name: "index_bill_amounts_on_player_id"
   end
 
   create_table "bills", force: :cascade do |t|
