@@ -22,7 +22,6 @@
           <td><%= parse_time_slot(game.time_slot) %></td>
           <td><%= parse_duration(game.duration) %></td>
           <td><%= game.player_ids.count %></td>
-          <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
