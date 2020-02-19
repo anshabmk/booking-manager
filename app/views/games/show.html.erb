@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= render 'shared/success_alert_notice', notice: notice %>
 
 <h1>Game details</h1>
 
@@ -56,6 +56,6 @@
 </table>
 
 <center>
-  <%= link_to 'Edit', edit_game_path(@game) %> | 
+  <%= link_to 'Edit', edit_game_path(@game) %> |
   <%= link_to 'Back', games_path %>
 </center>
