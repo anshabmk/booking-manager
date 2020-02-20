@@ -1,8 +1,10 @@
 module BillsHelper
-  def total_amount(bill)
-    bill.bill_amounts.inject(0.0) do |sum, bill_amount|
-      sum + bill_amount.amount
-    end
+  def bills_index_header_names
+    ['Date range', 'Fee per game', 'Total amount']
+  end
+
+  def bills_index_header_methods
+    %w[date_range fee_per_game total_amount]
   end
 
   def update_bill_amounts(bill)

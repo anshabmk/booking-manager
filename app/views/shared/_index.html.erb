@@ -1,0 +1,47 @@
+<%= render 'shared/success_alert_notice', notice: notice %>
+
+<h1><%= entries.klass.name.pluralize %></h1>
+
+<% if entries.count.zero? %>
+  <div class="alert alert-secondary" role="alert">
+    No <%= entries.klass.name.downcase.pluralize %> added yet!
+  </div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-hover text-align-center">
+      <thead class="thead-dark">
+        <tr>
+          <th>Sl. No.</th>
+
+          <% send("#{entries.klass.name.downcase.pluralize}_index_header_names").each do |header_name| %>
+            <th><%= header_name %></th>
+          <% end %>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <% entries.each_with_index do |entry, i| %>
+          <% entry_location = "/#{entries.klass.name.downcase.pluralize}/#{entry.id}" %>
+
+          <tr onclick="document.location = '<%= entry_location %>'";">
+            <td><%= i + 1 %></td>
+
+            <% send("#{entries.klass.name.downcase.pluralize}_index_header_methods").each do |method_name| %>
+              <td><%= entry.send(method_name) %></td>
+            <% end %>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+<% end %>
+
+<center>
+  <button>
+    <%= link_to "Add New #{entries.klass.name}", send("new_#{entries.klass.name.downcase}_path") %>
+  </button>
+</center>

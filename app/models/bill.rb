@@ -8,6 +8,12 @@ class Bill < ApplicationRecord
     "#{from_date_parsed} - #{to_date_parsed}"
   end
 
+  def total_amount
+    bill_amounts.inject(0.0) do |sum, bill_amount|
+      sum + bill_amount.amount
+    end
+  end
+
   private
 
   def parse_date(date)
