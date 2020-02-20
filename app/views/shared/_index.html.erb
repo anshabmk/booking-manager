@@ -41,7 +41,5 @@
 <% end %>
 
 <center>
-  <button>
-    <%= link_to "Add New #{entries.klass.name}", send("new_#{entries.klass.name.downcase}_path") %>
-  </button>
+  <%= link_to "Add New #{entries.klass.name}", send("new_#{entries.klass.name.downcase}_path"), class: "btn btn-secondary btn-sm", role: "button" %>
 </center>
