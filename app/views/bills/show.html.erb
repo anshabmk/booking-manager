@@ -1,0 +1,69 @@
+<%= render 'shared/success_alert_notice', notice: notice %>
+
+<h1>Bill details</h1>
+
+<table class="table">
+  <tr>
+    <th>Date range</th>
+    <td><%= @bill.date_range %></td>
+  </tr>
+  <tr>
+    <th>Fee per game</th>
+    <td><%= @bill.fee_per_game %></td>
+  </tr>
+  <tr>
+    <th>Total Amount</th>
+    <td><%= total_amount(@bill) %></td>
+  </tr>
+</table>
+
+<h2>Amounts</h2>
+
+<table class="table table-hover text-align-center">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Sl. No.
+      </th>
+      <th>
+        Player Name
+      </th>
+      <th>
+        Mobile number
+      </th>
+      <th>
+        E-mail ID
+      </th>
+      <th>
+        Amount
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bill.bill_amounts.each_with_index do |bill_amount, i| %>
+      <tr>
+        <td>
+          <%= i + 1 %>
+        </td>
+        <td>
+          <%= fullname(bill_amount.player.firstname, bill_amount.player.lastname) %>
+        </td>
+        <td>
+          <%= bill_amount.player.mobile_number %>
+        </td>
+        <td>
+          <%= bill_amount.player.email_id %>
+        </td>
+        <td>
+          <%= bill_amount.amount %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<center>
+  <%= link_to 'Edit', edit_bill_path(@bill) %> |
+  <%= link_to 'Back', bills_path %>
+</center>

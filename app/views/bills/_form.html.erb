@@ -1,0 +1,26 @@
+<%= form_with(model: bill, local: true) do |form| %>
+  <% if bill.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(bill.errors.count, "error") %> prohibited this player from being saved:</h2>
+
+      <ul>
+        <% player.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.label(:from_date, 'From date') %>
+  <%= form.date_field :from_date %>
+
+  <%= form.label(:to_date, 'To date') %>
+  <%= form.date_field :to_date %>
+
+  <%= form.label(:fee_per_game, 'Fee per game') %>
+  <%= form.text_field :fee_per_game %>
+
+  <div class="actions">
+    <%= form.submit("Generate Bill", class: "button") %>
+  </div>
+<% end %>
