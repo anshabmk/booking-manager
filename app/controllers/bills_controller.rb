@@ -1,7 +1,5 @@
 class BillsController < ApplicationController
-  include BillsHelper
-
-  before_action :set_bill, only: %i[show edit update]
+  before_action :set_bill, only: %i[show edit update send_notification_message]
 
   def index
     @bills = Bill.order(created_at: :desc)
@@ -18,7 +16,8 @@ class BillsController < ApplicationController
 
     respond_to do |format|
       if @bill.save
-        generate_bill_amounts(@bill)
+        @bill.generate_bill_amounts
+
         success_notice = 'Bill was successfully generated.'
 
         format.html { redirect_to @bill, notice: success_notice }
@@ -35,7 +34,7 @@ class BillsController < ApplicationController
   def update
     respond_to do |format|
       if @bill.update(bill_params)
-        update_bill_amounts(@bill)
+        @bill.update_bill_amounts
 
         success_notice = 'Bill was successfully updated.'
 
@@ -45,6 +44,17 @@ class BillsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @bill.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def send_notification_message
+    @bill.send_notification_message
+
+    success_notice = 'Notification SMS has been sent successfully.'
+
+    respond_to do |format|
+      format.html { redirect_to @bill, notice: success_notice }
+      format.json { render :show, status: :ok, location: @bill }
     end
   end
 
