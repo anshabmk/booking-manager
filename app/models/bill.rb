@@ -46,7 +46,7 @@ class Bill < ApplicationRecord
     end
 
     player_bill_amounts.each do |player_id, amount|
-      bill_amounts.create!(player_id: player_id, amount: amount)
+      bill_amounts.create!(player_id: player_id, amount: amount.round)
     end
   end
 
