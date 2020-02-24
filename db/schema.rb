@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_134125) do
+ActiveRecord::Schema.define(version: 2020_02_24_120048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,10 @@ ActiveRecord::Schema.define(version: 2020_02_19_134125) do
     t.float "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "token"
     t.index ["bill_id"], name: "index_bill_amounts_on_bill_id"
     t.index ["player_id"], name: "index_bill_amounts_on_player_id"
+    t.index ["token"], name: "index_bill_amounts_on_token", unique: true
   end
 
   create_table "bills", force: :cascade do |t|
