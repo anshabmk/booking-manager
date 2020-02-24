@@ -5,7 +5,7 @@
 <table class="table">
   <tr>
     <th>Date range</th>
-    <td><%= @bill.date_range %></td>
+    <td><%= @bill.strf_date_range %></td>
   </tr>
   <tr>
     <th>Fee per game</th>
@@ -16,6 +16,10 @@
     <td><%= @bill.total_amount %></td>
   </tr>
 </table>
+
+<center>
+  <%= link_to "Send Notification SMS", "/bills/#{@bill.id}/send_notification_message", class: "btn btn-secondary btn-sm", role: "button" %>
+</center>
 
 <h2>Amounts</h2>
 
