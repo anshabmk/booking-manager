@@ -27,7 +27,7 @@ class Bill < ApplicationRecord
   end
 
   def fee_per_player_per_game
-    (games.count * fee_per_game) / players_count_in_all_games
+    ((games.count * fee_per_game) / players_count_in_all_games).ceil
   end
 
   def update_bill_amounts
@@ -46,7 +46,7 @@ class Bill < ApplicationRecord
     end
 
     player_bill_amounts.each do |player_id, amount|
-      bill_amounts.create!(player_id: player_id, amount: amount.round)
+      bill_amounts.create!(player_id: player_id, amount: amount)
     end
   end
 
@@ -56,9 +56,7 @@ class Bill < ApplicationRecord
 
       next if mobile_number.blank?
 
-      text = "Please pay the amount Rs.#{ba.amount.round}/-"
-
-      Notifier::SMS.send(mobile_number, text)
+      Notifier::SMS.send(mobile_number, ba.notification_message_content)
     end
   end
 
