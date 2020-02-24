@@ -1,0 +1,64 @@
+<h1>Bill Amount Details</h1>
+
+<table class="table">
+  <tr>
+    <th>Player name</th>
+    <td><%= @bill_amount.player.fullname %></td>
+  </tr>
+  <tr>
+    <th>Bill period</th>
+    <td><%= @bill_amount.bill.strf_date_range %></td>
+  </tr>
+  <tr>
+    <th>Fee per game</th>
+    <td><%= @bill_amount.bill.fee_per_game %></td>
+  </tr>
+  <tr>
+    <th>Fee per game per player</th>
+    <td><%= @bill_amount.bill.fee_per_player_per_game %></td>
+  </tr>
+  <tr>
+    <th>Amount to be paid</th>
+    <td><%= @bill_amount.amount %></td>
+  </tr>
+</table>
+
+<h2>Match Details</h2>
+
+<table class="table table-hover text-align-center">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Sl. No.
+      </th>
+      <th>
+        Played On
+      </th>
+      <th>
+        Time Slot
+      </th>
+      <th>
+        Duration
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bill_amount.bill.games.order(played_on: :desc).select { |g| g.player_ids.include?(@bill_amount.player_id) }.each_with_index do |game, i| %>
+      <tr>
+        <td>
+          <%= i + 1 %>
+        </td>
+        <td>
+          <%= game.parsed_played_on_date %>
+        </td>
+        <td>
+          <%= game.parsed_time_slot %>
+        </td>
+        <td>
+          <%= game.parsed_duration %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

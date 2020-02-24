@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'bill_amounts/show/:token' => 'bill_amounts#show'
   root 'bills#index'
 
   resources :players
