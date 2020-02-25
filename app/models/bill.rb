@@ -56,7 +56,9 @@ class Bill < ApplicationRecord
 
       next if mobile_number.blank?
 
-      Notifier::SMS.send(mobile_number, ba.notification_message_content)
+      res = Notifier::SMS.send(mobile_number, ba.notification_message_content)
+
+      Rails.logger.info res.inspect
     end
   end
 
