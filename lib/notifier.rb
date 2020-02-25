@@ -5,15 +5,15 @@ module Notifier
   # SMS Notifier
   module SMS
     def self.send(msisdn, text)
-      requested_url = 'https://api.textlocal.in/send/?'
-      uri = URI.parse(requested_url)
+      uri = URI.parse(ENV['TEXTLOCAL_API_URL'])
 
       res = Net::HTTP.post_form(
         uri,
-        'apikey' => 'd8CfZ16D37Q-1T9eeakezVs2yLFiKHsstp7amDwlyZ',
-        'message' => text,
-        'sender' => 'TXTLCL',
-        'numbers' => "91#{msisdn}"
+        apikey: ENV['TEXTLOCAL_API_KEY'],
+        message: text,
+        sender: ENV['TEXTLOCAL_SENDER_ID'],
+        numbers: "91#{msisdn}",
+        test: Rails.env == 'development' ? 'true' : 'false'
       )
 
       JSON.parse(res.body)
