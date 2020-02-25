@@ -18,9 +18,9 @@ class BillsController < ApplicationController
       if @bill.save
         @bill.generate_bill_amounts
 
-        success_notice = 'Bill was successfully generated.'
+        flash[:success] = 'Bill was successfully generated.'
 
-        format.html { redirect_to @bill, notice: success_notice }
+        format.html { redirect_to @bill }
         format.json { render :show, status: :created, location: @bill }
       else
         format.html { render :new }
@@ -36,9 +36,9 @@ class BillsController < ApplicationController
       if @bill.update(bill_params)
         @bill.update_bill_amounts
 
-        success_notice = 'Bill was successfully updated.'
+        flash[:success] = 'Bill was successfully updated.'
 
-        format.html { redirect_to @bill, notice: success_notice }
+        format.html { redirect_to @bill }
         format.json { render :show, status: :ok, location: @bill }
       else
         format.html { render :edit }
@@ -50,10 +50,10 @@ class BillsController < ApplicationController
   def send_notification_message
     @bill.send_notification_message
 
-    success_notice = 'Notification SMS has been sent successfully.'
+    flash[:success] = 'Notification SMS has been sent successfully.'
 
     respond_to do |format|
-      format.html { redirect_to @bill, notice: success_notice }
+      format.html { redirect_to @bill }
       format.json { render :show, status: :ok, location: @bill }
     end
   end

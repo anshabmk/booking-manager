@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
+  root 'sessions#new'
+
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+  delete 'logout' => 'sessions#destroy'
+
   get 'bill_amounts/show/:token' => 'bill_amounts#show'
-  root 'bills#index'
 
   resources :players
   resources :games
