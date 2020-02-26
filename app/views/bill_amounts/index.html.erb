@@ -1,0 +1,39 @@
+<h1> Bill Amounts </h1>
+
+<% if @bill_amounts.count.zero? %>
+  <div class="alert alert-secondary" role="alert">
+    No bill amounts for you to show!
+  </div>
+<% else %>
+  <div class="table-responsive table-secondary">
+    <table class="table table-hover text-align-center">
+      <thead class="thead-dark">
+        <tr>
+          <th>Sl. No.</th>
+
+          <% bill_amounts_index_header_names.each do |header_name| %>
+            <th><%= header_name %></th>
+          <% end %>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @bill_amounts.each_with_index do |entry, i| %>
+          <% entry_location = "/bill_amounts/show/#{entry.token}" %>
+
+          <tr onclick="document.location = '<%= entry_location %>'";">
+            <td><%= i + 1 %></td>
+
+            <% bill_amounts_index_header_methods.each do |method_name| %>
+              <td><%= entry.send(method_name) %></td>
+            <% end %>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+<% end %>
