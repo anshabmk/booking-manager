@@ -49,4 +49,9 @@ module SessionsHelper
 
     bill_amounts_path
   end
+
+  # Returns true if the user type is admin
+  def admin?
+    current_user.class.name == 'User'
+  end
 end
