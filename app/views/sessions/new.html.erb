@@ -10,7 +10,12 @@
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
 
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+      <%= f.label :admin_login, class: "checkbox inline" do %>
+        <%= f.check_box :admin_login %>
+        <span>Admin login</span>
+      <% end %>
+
+      <%= f.submit "Log in", class: "btn btn-secondary btn-block" %>
     <% end %>
   </div>
 </div>

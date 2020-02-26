@@ -1,18 +1,22 @@
+# frozen_string_literal: true
+
+# Sessions controller
 class SessionsController < ApplicationController
-  skip_before_action :require_login
+  skip_before_action :require_admin_login
 
   def new
+    redirect_to(successful_login_path) if logged_in?
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase)
+    authenticated_user = authenticate_session(params[:session])
 
-    if user && user.authenticate(params[:session][:password])
-      # Log the user in and redirect to the bill's index page.
-      log_in(user)
-      redirect_to(bills_path)
+    if authenticated_user
+      log_in(authenticated_user)
+      redirect_to(successful_login_path)
     else
-      # Create an error message.
+      flash[:danger] = "E-mail/Password combination doesn't match"
+
       render 'new'
     end
   end
