@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
 
   get 'bill_amounts/show/:token' => 'bill_amounts#show'
+  get 'bill_amounts' => 'bill_amounts#index'
 
   resources :players
   resources :games
