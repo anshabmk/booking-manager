@@ -54,4 +54,12 @@ module SessionsHelper
   def admin?
     current_user.class.name == 'User'
   end
+
+  def admin_logged_in?
+    logged_in? && current_user.class.name == 'User'
+  end
+
+  def player_logged_in?
+    logged_in? && current_user.class.name == 'Player'
+  end
 end
