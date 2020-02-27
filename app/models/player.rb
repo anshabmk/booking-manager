@@ -1,4 +1,6 @@
 class Player < ApplicationRecord
+  attr_accessor :skip_password
+
   has_and_belongs_to_many :games
   has_many :bill_amounts
 
@@ -21,7 +23,10 @@ class Player < ApplicationRecord
                        uniqueness: { case_sensitive: false }
 
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+
+  validates :password, presence: true,
+                       length: { minimum: 6 },
+                       unless: :skip_password
 
   def fullname
     "#{firstname} #{lastname}"
@@ -38,10 +43,9 @@ class Player < ApplicationRecord
   private
 
   def unique_mobile_number
-    active_players = Player.where(activated: true)
+    active_mobile_numbers = Player.where(activated: true).pluck(:mobile_number)
+    error_args = [:mobile_number, 'is already taken']
 
-    if active_players.pluck(:mobile_number).include?(mobile_number)
-      errors.add(:mobile_number, 'is already taken')
-    end
+    errors.add(*error_args) if active_mobile_numbers.include?(mobile_number)
   end
 end
