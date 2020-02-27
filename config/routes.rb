@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   get 'bill_amounts' => 'bill_amounts#index'
 
   resources :players
+  get 'player_signup' => 'players#new'
+  post 'player_signup' => 'players#create'
+
   resources :games
   resources :bills
 
