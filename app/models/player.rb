@@ -9,8 +9,9 @@ class Player < ApplicationRecord
   VALID_MOBILE_NUMBER_REGEX = /\A\d{10}\z/i.freeze
 
   validates :mobile_number, presence: true,
-                            format: { with: VALID_MOBILE_NUMBER_REGEX },
-                            uniqueness: true
+                            format: { with: VALID_MOBILE_NUMBER_REGEX }
+
+  validate :unique_mobile_number
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
 
@@ -32,5 +33,15 @@ class Player < ApplicationRecord
 
   def self.inactive_players
     Player.where(activated: false)
+  end
+
+  private
+
+  def unique_mobile_number
+    active_players = Player.where(activated: true)
+
+    if active_players.pluck(:mobile_number).include?(mobile_number)
+      errors.add(:mobile_number, 'is already taken')
+    end
   end
 end
