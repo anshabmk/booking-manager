@@ -46,6 +46,12 @@
 </table>
 
 <center>
-  <%= link_to 'Edit', edit_player_path(@player) %> |
+  <%= link_to 'Edit', edit_player_path(@player) %>
+
+  <% if admin_logged_in? %>
+
+  |
   <%= link_to 'Back', players_path %>
+
+  <% end %>
 </center>
