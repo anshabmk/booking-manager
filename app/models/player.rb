@@ -10,4 +10,8 @@ class Player < ApplicationRecord
   def games_count
     game_ids.count
   end
+
+  def self.inactive_players
+    Player.where(activated: false)
+  end
 end
