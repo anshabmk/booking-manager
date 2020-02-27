@@ -1,5 +1,7 @@
 class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_admin_login, only: %i[new create show edit update]
+  before_action :require_login, only: %i[show edit update]
+  before_action :set_player, only: %i[show edit update destroy]
 
   # GET /players
   # GET /players.json
@@ -10,15 +12,24 @@ class PlayersController < ApplicationController
   # GET /players/1
   # GET /players/1.json
   def show
+    # Players are not authorized to view the details of other users.
+    redirect_to(current_user) if player_logged_in? && @player.id != current_user.id
   end
 
   # GET /players/new
   def new
-    @player = Player.new
+    if player_logged_in?
+      # Redirects to the player's profile page.
+      redirect_to(current_user)
+    else
+      @player = Player.new
+    end
   end
 
   # GET /players/1/edit
   def edit
+    # Players are not authorized to edit the details of other users.
+    redirect_to(current_user) if player_logged_in? && @player.id != current_user.id
   end
 
   # POST /players
@@ -28,9 +39,18 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       if @player.save
-        flash[:success] = 'Player was successfully created.'
+        format.html do
+          if admin_logged_in?
+            flash[:success] = 'Added new player successfully.'
 
-        format.html { redirect_to @player }
+            redirect_to(@player)
+          else
+            flash[:success] = "Welcome, #{@player.firstname}. Contact administrator for account activation."
+
+            redirect_to(login_url)
+          end
+        end
+
         format.json { render :show, status: :created, location: @player }
       else
         format.html { render :new }
@@ -42,11 +62,29 @@ class PlayersController < ApplicationController
   # PATCH/PUT /players/1
   # PATCH/PUT /players/1.json
   def update
-    respond_to do |format|
-      if @player.update(player_params)
-        flash[:success] = 'Player was successfully updated.'
+    # Players are not authorized to edit the details of other users.
+    redirect_to(current_user) if player_logged_in? && @player.id != current_user.id
 
-        format.html { redirect_to @player }
+    email_changed = player_params[:email_id] != @player.email_id
+    mobile_changed = player_params[:mobile_number] != @player.mobile_number
+    email_or_mobile_changed = email_changed || mobile_changed
+    activated = !(player_logged_in? && email_or_mobile_changed)
+
+    respond_to do |format|
+      if @player.update(player_params.merge(activated: activated))
+        format.html do
+          if activated
+            flash[:success] = 'Player was successfully updated.'
+
+            redirect_to(@player)
+          else
+            flash[:danger] = 'Your account is temporarily de-activated. Contact administrator for activation.'
+
+            log_out
+            redirect_to(login_url)
+          end
+        end
+
         format.json { render :show, status: :ok, location: @player }
       else
         format.html { render :edit }
@@ -77,6 +115,6 @@ class PlayersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def player_params
       params.fetch(:player, {})
-            .permit(:firstname, :lastname, :mobile_number, :email_id)
+            .permit(:firstname, :lastname, :mobile_number, :email_id, :password, :password_confirmation)
     end
 end
