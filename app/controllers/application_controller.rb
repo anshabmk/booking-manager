@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin_login
-    return if logged_in? && current_user.class.name == 'User'
+    return if admin_logged_in?
 
     flash.now[:danger] = 'You must be logged in as admin to view the contents of this page.'
 
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_player_login
-    return if logged_in? && current_user.class.name == 'Player'
+    return if player_logged_in?
 
     flash.now[:danger] = 'You must be logged in as a player to view the contents of this page.'
 
