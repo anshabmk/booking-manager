@@ -6,7 +6,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.all
+    @players = Player.where(activated: true)
   end
 
   # GET /players/1
