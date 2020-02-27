@@ -12,8 +12,14 @@ class SessionsController < ApplicationController
     authenticated_user = authenticate_session(params[:session])
 
     if authenticated_user
-      log_in(authenticated_user)
-      redirect_to(successful_login_path)
+      if authenticated_user.class.name == 'Player' && !authenticated_user.activated
+        flash.now[:danger] = 'Your account is not activated. Please contact administrator for activation.'
+
+        render 'new'
+      else
+        log_in(authenticated_user)
+        redirect_to(successful_login_path)
+      end
     else
       flash[:danger] = "E-mail/Password combination doesn't match"
 
