@@ -5,6 +5,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def require_login
+    return if logged_in?
+
+    flash.now[:danger] = 'You must be logged in to view the contents of this page.'
+
+    redirect_to(login_url)
+  end
+
   def require_admin_login
     return if logged_in? && current_user.class.name == 'User'
 
