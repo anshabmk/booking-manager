@@ -63,32 +63,39 @@ class PlayersController < ApplicationController
   # PATCH/PUT /players/1.json
   def update
     # Players are not authorized to edit the details of other users.
-    redirect_to(current_user) if player_logged_in? && @player.id != current_user.id
+    if player_logged_in? && @player.id != current_user.id
+      redirect_to(current_user)
+    elsif player_params == @player.attributes.slice(*player_params.keys)
+      flash[:info] = 'Nothing to update.'
 
-    email_changed = player_params[:email_id] != @player.email_id
-    mobile_changed = player_params[:mobile_number] != @player.mobile_number
-    email_or_mobile_changed = email_changed || mobile_changed
-    activated = !(player_logged_in? && email_or_mobile_changed)
+      redirect_to(@player)
+    else
+      email_changed = player_params[:email_id] != @player.email_id
+      mobile_changed = player_params[:mobile_number] != @player.mobile_number
+      email_or_mobile_changed = email_changed || mobile_changed
+      activated = !(player_logged_in? && email_or_mobile_changed)
+      @player.skip_password = !player_params.keys.include?('password')
 
-    respond_to do |format|
-      if @player.update(player_params.merge(activated: activated))
-        format.html do
-          if activated
-            flash[:success] = 'Player was successfully updated.'
+      respond_to do |format|
+        if @player.update(player_params.merge(activated: activated))
+          format.html do
+            if activated
+              flash[:success] = 'Player was successfully updated.'
 
-            redirect_to(@player)
-          else
-            flash[:danger] = 'Your account is temporarily de-activated. Contact administrator for activation.'
+              redirect_to(@player)
+            else
+              flash[:danger] = 'Your account is temporarily de-activated. Contact administrator for activation.'
 
-            log_out
-            redirect_to(login_url)
+              log_out
+              redirect_to(login_url)
+            end
           end
-        end
 
-        format.json { render :show, status: :ok, location: @player }
-      else
-        format.html { render :edit }
-        format.json { render json: @player.errors, status: :unprocessable_entity }
+          format.json { render :show, status: :ok, location: @player }
+        else
+          format.html { render :edit }
+          format.json { render json: @player.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
