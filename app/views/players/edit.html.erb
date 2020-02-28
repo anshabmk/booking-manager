@@ -29,7 +29,8 @@
     </small>
   </div>
 
-  <%= form.submit("Save", class: "btn btn-primary btn-block mb-2") %>
+  <center>
+    <%= link_to "Cancel", @player, class: "btn btn-secondary", role: "button" %>
+    <%= form.submit("Save", class: "btn btn-primary") %>
+  </center>
 <% end %>
-
-<%= link_to "Cancel", @player, class: "btn btn-secondary btn-block", role: "button" %>
