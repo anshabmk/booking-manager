@@ -43,6 +43,8 @@ class Player < ApplicationRecord
   private
 
   def unique_mobile_number
+    return unless mobile_number_changed?
+
     active_mobile_numbers = Player.where(activated: true).pluck(:mobile_number)
     error_args = [:mobile_number, 'is already taken']
 
