@@ -1,3 +1,19 @@
 <center><h1>Add Game</h1></center>
 
+<div class="container">
+  <div class="row">
+    <div class="col">
+    <% if @game.errors.any? %>
+      <div id="error_explanation">
+        <div class="alert alert-danger">
+          <center>
+            The form contains <%= pluralize(@game.errors.count, "error") %>.
+          </center>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
+
 <%= render 'form', game: @game %>
