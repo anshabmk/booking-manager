@@ -1,35 +1,56 @@
-<%= form_with(model: game, local: true) do |form| %>
-  <% if game.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
+<% if game.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
 
-      <ul>
-        <% game.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <%= form.label(:played_on, 'Played on') %>
-  <%= form.date_field :played_on %>
-
-  <%= form.label(:time_slot, 'Time slot') %>
-  <%= form.select(:time_slot, time_slots) %>
-
-  <%= form.label(:duration, 'Duration') %>
-  <%= form.select(:duration, durations) %>
-
-  <h3>Players</h3>
-  <%= hidden_field_tag "game[player_ids][]", nil %>
-  <% Player.all.each do |player| %>
-    <div class="inline-field">
-      <%= check_box_tag "game[player_ids][]", player.id, game.player_ids.include?(player.id), id: dom_id(player) %>
-      <%= label_tag dom_id(player), player.firstname %><br>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit("Submit", class: "button") %>
+    <ul>
+      <% game.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
+
+<div class="container">
+  <%= form_with(model: game, local: true) do |form| %>
+    <div class="form-group row">
+      <%= form.label(:played_on, 'Played on', class: "col-sm-2 col-form-label") %>
+      <div class="col-sm-10">
+        <%= form.date_field :played_on, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <%= form.label(:time_slot, 'Time slot', class: "col-sm-2 col-form-label") %>
+      <div class="col-sm-10">
+        <%= form.select(:time_slot, time_slots, class: "form-control" ) %>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <%= form.label(:duration, 'Duration', class: "col-sm-2 col-form-label") %>
+      <div class="col-sm-10">
+        <%= form.select(:duration, durations, class: "form-control" ) %>
+      </div>
+    </div>
+
+    <center><h4>Select players</h4></center>
+
+    <%= form.collection_check_boxes(:player_ids, Player.where(activated: true), :id, :fullname) do |b| %>
+
+    <div class="custom-control custom-checkbox">
+      <%= b.check_box(class: "custom-control-input") %>
+      <%= b.label(class: "custom-control-label") %>
+    </div>
+
+    <% end %>
+
+    <div class="form-group row justify-content-center">
+      <div class="col">
+        <center>
+          <%= link_to 'Back', games_path, class: "btn btn-secondary", role: "button" %>
+          <%= form.submit("Submit", class: "btn btn-primary") %>
+        </center>
+      </div>
+    </div>
+  <% end %>
+</div>
