@@ -24,10 +24,11 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new(game_params)
+    @game = Game.new(game_params.except(:player_ids))
 
     respond_to do |format|
       if @game.save
+        @game.player_ids = game_params[:player_ids]
         flash[:success] = 'Game was successfully created.'
 
         format.html { redirect_to @game }
