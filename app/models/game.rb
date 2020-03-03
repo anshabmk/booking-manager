@@ -1,6 +1,12 @@
 class Game < ApplicationRecord
   has_and_belongs_to_many :players
 
+  validates :played_on, presence: true
+  validates :time_slot, presence: true
+  validates :duration, presence: true
+
+  validate :unique_played_on_and_time_slot
+
   def parsed_played_on_date
     played_on.strftime('%d %b %Y')
   end
@@ -22,5 +28,17 @@ class Game < ApplicationRecord
 
   def players_count
     player_ids.count
+  end
+
+  private
+
+  def unique_played_on_and_time_slot
+    game_exists = Game.where(played_on: played_on, time_slot: time_slot).exists?
+
+    return unless game_exists
+
+    error_args = [:played_on, 'game exists for same date and time slot']
+
+    errors.add(*error_args)
   end
 end
