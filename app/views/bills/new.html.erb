@@ -1,7 +1,17 @@
 <center><h1>Add Bill</h1></center>
 
-<div class="form-container">
-  <%= render 'form', bill: @bill %>
+<div class="container mb-3">
+  <div class="row">
+    <div class="col">
+    <% if @bill.errors.any? %>
+      <div id="error_explanation">
+        <div class="alert alert-danger">
+          <center>The form contains <%= pluralize(@bill.errors.count, "error") %>.</center>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  </div>
 </div>
 
-<center><%= link_to 'Back', bills_path %></center>
+<%= render 'form', bill: @bill %>
