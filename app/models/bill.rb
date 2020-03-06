@@ -1,5 +1,6 @@
 class Bill < ApplicationRecord
   has_many :bill_amounts, dependent: :destroy
+  validates :name, presence: true, uniqueness: true
 
   def strf_date_range
     from_date_parsed = parse_date(from_date)
