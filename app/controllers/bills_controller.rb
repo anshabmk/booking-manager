@@ -65,6 +65,6 @@ class BillsController < ApplicationController
   end
 
   def bill_params
-    params.fetch(:bill, {}).permit(:from_date, :to_date, :fee_per_game)
+    params.fetch(:bill, {}).permit(:from_date, :to_date, :fee_per_game, :name)
   end
 end
