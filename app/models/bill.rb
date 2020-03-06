@@ -1,6 +1,8 @@
 class Bill < ApplicationRecord
   has_many :bill_amounts, dependent: :destroy
   validates :name, presence: true, uniqueness: true
+  validate :games_presence
+  validate :bill_uniqueness
 
   def strf_date_range
     from_date_parsed = parse_date(from_date)
@@ -67,5 +69,26 @@ class Bill < ApplicationRecord
 
   def parse_date(date)
     date&.strftime('%d %b %Y')
+  end
+
+  def games_presence
+    return unless games.blank?
+
+    errors.add(:from_date, 'no games played in this date range')
+    errors.add(:to_date, 'no games played in this date range')
+  end
+
+  def bill_uniqueness
+    another_bill_with_same_params_exists = Bill.where(
+      from_date: from_date,
+      to_date: to_date,
+      fee_per_game: fee_per_game
+    ).exists?
+
+    return unless another_bill_with_same_params_exists
+
+    errors.add(:from_date, 'another bill with same combination exists')
+    errors.add(:to_date, 'another bill with same combination exists')
+    errors.add(:fee_per_game, 'another bill with same combination exists')
   end
 end
