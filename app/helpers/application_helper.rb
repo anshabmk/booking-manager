@@ -23,4 +23,10 @@ module ApplicationHelper
       }
     ]
   end
+
+  def send_chain(obj, chained_method_names)
+    chained_method_names.split('.').inject(obj) do |object, method|
+      object.send(method)
+    end
+  end
 end
