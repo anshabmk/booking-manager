@@ -26,7 +26,7 @@
             <td><%= i + 1 %></td>
 
             <% bill_amounts_index_header_methods.each do |method_name| %>
-              <td><%= entry.send(method_name) %></td>
+              <td><%= send_chain(entry, method_name) %></td>
             <% end %>
 
           </tr>
